@@ -14,14 +14,25 @@ public class DroneThread extends Thread{
 		try {			
 			Commandes commande = new Commandes();
 			sock.sendCommande(commande.stable());
-			System.out.println("coucou");
 		    Thread.sleep(1000);
-		    sock.sendCommande(commande.move(0, 0, 0, 0, 0));
-		    sock.sendCommande(commande.move(1, 0, 0, -0.2f, 0));
-		    sock.sendCommande(commande.move(0, 0, 0, 0, 0));
-		    sock.sendCommande(commande.landing());
 		    sock.sendCommande(commande.initialisation("prof", "ses", "app"));
+		    /*sock.sendCommande(commande.move(0,0,0,0,0));
+		    sock.sendCommande(commande.move(1,0,5,0,0));
+		    sock.sendCommande(commande.move(1,4,0,0,0));
+		    sock.sendCommande(commande.move(1,4,0,0,1));*/
+		    int compteur = 0;
+		    while(compteur!= 20){
+			    sock.sendCommande(commande.configIDS("prof", "ses", "app"));
+		    	sock.sendCommande(commande.camFrontal());
+		    	Thread.sleep(1000);
+			    sock.sendCommande(commande.configIDS("prof", "ses", "app"));
+		    	sock.sendCommande(commande.camVertical());
+		    	Thread.sleep(1000);
+		    	compteur++;
+		    }
+		    
 		    sock.close();
+		    System.out.println("FIN");
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

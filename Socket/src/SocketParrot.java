@@ -20,12 +20,13 @@ public class SocketParrot {
 		}
 
 	
-	public void sendCommande(String message) throws IOException{
+	public void sendCommande(String message) throws IOException, InterruptedException{
 		  InetAddress serveur = InetAddress.getByName(this.addr);
 		  byte buffer[] = message.getBytes();
 	      int length = message.length();
 	      DatagramPacket dataSent = new DatagramPacket(buffer,length,serveur,port);
 	      this.socket.send(dataSent);
+	      Thread.sleep(200);
 	}
 	
 	public void sendCommande(ArrayList<String> array) throws IOException, InterruptedException{
@@ -35,7 +36,6 @@ public class SocketParrot {
 			compteur++;
 			if(compteur == 2){
 				Thread.sleep(200);
-				System.out.println("test");
 				compteur = 0;
 			}
 		}
